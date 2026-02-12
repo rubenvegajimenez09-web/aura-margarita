@@ -118,22 +118,20 @@
             width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); 
             background: rgba(0,0,0,0.4); color: white; margin-bottom: 12px; outline: none; font-size: 1rem;
         }
-        label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 6px; margin-left: 5px; }
 
         .happy-card { text-align: center; padding: 80px 30px; }
         .happy-card h2 { font-size: 2.8rem; line-height: 1.4; background: linear-gradient(to right, #fff, var(--cian)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .happy-card p { font-size: 1.3rem; margin-top: 25px;}
 
-        /* COCHE Y LÍNEA - UNIFICADO */
+        /* COCHE Y LÍNEA */
         .car-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: 100px;
             z-index: 40;
             overflow: hidden;
-            pointer-events: none; /* Permite hacer clic a través del contenedor si fuera necesario */
         }
 
         .time-line-bg {
@@ -141,28 +139,28 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: linear-gradient(to right, #000000 0%, #4a00e0 25%, #ff5e00 50%, #e02020 75%, #000000 100%);
             opacity: 0.6;
-            filter: blur(1px);
         }
 
         .porsche-911 {
             position: absolute;
-            bottom: 10px; /* Ajustado para que toque la línea */
+            bottom: 8px; 
             left: 0; 
-            width: 90px;
+            width: 100px; /* Tamaño ideal */
             height: auto;
             transform: translateX(-50%);
             transition: left 1s linear; 
-            filter: drop-shadow(0 0 8px rgba(112, 0, 255, 0.4));
-            opacity: 0.9;
+            filter: drop-shadow(0 0 8px rgba(112, 0, 255, 0.4)) brightness(1.2);
+            opacity: 0.95;
+            cursor: pointer; /* Indica que se puede pulsar */
             animation: carHover 2s infinite alternate ease-in-out;
         }
 
         @keyframes carHover {
             from { transform: translateY(0px) translateX(-50%); }
-            to { transform: translateY(-4px) translateX(-50%); }
+            to { transform: translateY(-5px) translateX(-50%); }
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }
@@ -194,9 +192,9 @@
             <div class="widget">
                 <h3 style="margin-top:0">Asistente Aura</h3>
                 <div id="chat-box">
-                    <div class="msg aura">¡Hola Margarita! Soy tu asistente. Pregúntame por tus planes de <b>hoy</b> o de cualquier <b>día</b>. ✨</div>
+                    <div class="msg aura">¡Hola Margarita! Soy tu asistente. Pregúntame por tus planes o <b>pulsa el Porsche</b> para un dato curioso. 🏎️</div>
                 </div>
-                <input type="text" id="input-chat" placeholder="Escribe '¿Qué tengo hoy?' o 'el día 18'...">
+                <input type="text" id="input-chat" placeholder="¿Qué tengo hoy?">
             </div>
             <div class="widget">
                 <h3 style="margin-top:0">Próximas Tareas</h3>
@@ -222,17 +220,10 @@
     <div class="backdrop" id="backdrop" onclick="cerrar()"></div>
     <div class="modal" id="modal">
         <h2 id="fecha-titulo" style="margin-top:0; color:var(--cian); font-size: 1.3rem;">Nueva Tarea</h2>
-        <label>¿Qué hay que hacer?</label>
-        <input type="text" id="tarea-nombre" placeholder="Ej: Revisión médica">
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div>
-                <label>Hora Inicio (Opcional)</label>
-                <input type="time" id="tarea-inicio">
-            </div>
-            <div>
-                <label>Hora Fin (Opcional)</label>
-                <input type="time" id="tarea-fin">
-            </div>
+        <input type="text" id="tarea-nombre" placeholder="¿Qué hay que hacer?">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top: 15px;">
+            <input type="time" id="tarea-inicio">
+            <input type="time" id="tarea-fin">
         </div>
         <button class="btn-add" onclick="guardarTarea()">Añadir a la Agenda</button>
         <div id="lista-tareas-dia" style="margin-top:25px; border-top:1px solid var(--border); padding-top:20px; max-height: 150px; overflow-y: auto;"></div>
@@ -240,20 +231,24 @@
 
     <div class="car-container">
         <div class="time-line-bg"></div>
-        <img src="https://p1.pngwing.com/py/342/907/png-transparent-porsche-911-gt2-car-porsche-911-gt3-r-991-porsche-911-gt3-rsr-porsche-911-997-compact-car-car-performance-car.png" alt="Porsche 911" class="porsche-911" id="porsche-car">
+        <img src="https://cdn-icons-png.flaticon.com/512/744/744465.png" 
+             alt="Porsche 911" 
+             class="porsche-911" 
+             id="porsche-car" 
+             onclick="datoCuriosoCoche()">
     </div>
 
     <script>
         let diaSeleccionado = "";
         const HOY_ISO = new Date().toISOString().split('T')[0];
-        const frasesMama = [
-            "Eres la mejor madre y una profesional imparable. ❤️",
-            "Cree que puedes y ya estarás a medio camino. ❤️",
-            "Tu sonrisa es la mejor red social, ¡compártela hoy! ✨",
-            "Eres capaz de cosas increíbles, solo tienes que ser tú misma. 🌸",
-            "Hoy es un buen día para tener un gran día, Jefa. 🚀",
-            "No cuentes los días, haz que los días cuenten. 💎",
-            "Tu energía es contagiosa, ¡ilumina a tu equipo hoy! ☀️"
+        
+        const datosCoches = [
+            "¿Sabías que el Porsche 911 fue diseñado originalmente con el nombre 901? Se cambió porque Peugeot tenía los derechos de los nombres con un 0 en medio.",
+            "El Porsche 911 es el único coche deportivo que ha estado en producción continua durante más de 60 años.",
+            "El motor del 911 está en la parte trasera, lo que le da una tracción y frenada únicas en el mundo.",
+            "Ferdinand Porsche, el fundador, diseñó el primer coche híbrido... ¡en el año 1900!",
+            "El logotipo de Porsche es una combinación del escudo de armas de Stuttgart y el del estado de Württemberg.",
+            "En el Porsche 911, la llave de contacto está a la izquierda del volante, una herencia de las carreras de Le Mans."
         ];
 
         function getDB() { return JSON.parse(localStorage.getItem('tareas_aura')) || []; }
@@ -266,10 +261,6 @@
             btn.classList.add('active');
             if(s === 'agenda') dibujarCalendario();
             if(s === 'resumen') actualizarMiniLista();
-            if(s === 'momento') {
-                const diaSemana = new Date().getDay();
-                document.getElementById('frase-dinamica').innerText = `"${frasesMama[diaSemana]}"`;
-            }
         }
 
         function dibujarCalendario() {
@@ -312,22 +303,27 @@
             db.push({ fecha: diaSeleccionado, titulo: titulo, hora: horario });
             localStorage.setItem('tareas_aura', JSON.stringify(db));
             document.getElementById('tarea-nombre').value = "";
-            document.getElementById('tarea-inicio').value = "";
-            document.getElementById('tarea-fin').value = "";
             actualizarListaModal();
             actualizarMiniLista();
         }
 
         function actualizarListaModal() {
             const div = document.getElementById('lista-tareas-dia');
-            const tareas = getDB().filter(t => t.fecha === diaSeleccionado).sort((a,b) => a.hora.localeCompare(b.hora));
-            div.innerHTML = tareas.length ? tareas.map(t => `<div><span>${t.hora}</span><br>${t.titulo}</div>`).join('') : "<span style='color:#555'>No hay tareas.</span>";
+            const tareas = getDB().filter(t => t.fecha === diaSeleccionado);
+            div.innerHTML = tareas.length ? tareas.map(t => `<div><span>${t.hora}</span> ${t.titulo}</div>`).join('') : "Nada por ahora.";
         }
 
         function actualizarMiniLista() {
             const div = document.getElementById('mini-lista');
-            const tareas = getDB().filter(t => t.fecha === HOY_ISO).sort((a,b) => a.hora.localeCompare(b.hora));
-            div.innerHTML = tareas.length ? tareas.map(t => `<div style="margin-bottom:15px"><b style="color:var(--púrpura); font-size:1rem;">${t.hora}</b><br><span style="color:white; font-size:0.95rem;">${t.titulo}</span></div>`).join('') : "<span style='color:#888;'>Hoy estás libre, ¡disfruta! ✨</span>";
+            const tareas = getDB().filter(t => t.fecha === HOY_ISO);
+            div.innerHTML = tareas.length ? tareas.map(t => `<div style="margin-bottom:10px"><b>${t.hora}</b>: ${t.titulo}</div>`).join('') : "Hoy libre. ✨";
+        }
+
+        function datoCuriosoCoche() {
+            const box = document.getElementById('chat-box');
+            const dato = datosCoches[Math.floor(Math.random() * datosCoches.length)];
+            box.innerHTML += `<div class="msg aura">🏎️ <b>Dato de experta:</b> ${dato}</div>`;
+            box.scrollTop = box.scrollHeight;
         }
 
         document.getElementById('input-chat').onkeypress = function(e) {
@@ -337,27 +333,11 @@
                 box.innerHTML += `<div class="msg user">${txt}</div>`;
                 this.value = "";
                 setTimeout(() => {
-                    let fBusca = ""; let tag = "";
-                    if(txt.toLowerCase().includes("hoy")) { fBusca = HOY_ISO; tag = "hoy"; }
-                    else { 
-                        const m = txt.match(/\d+/); 
-                        if(m) { fBusca = `2026-02-${m[0].padStart(2,'0')}`; tag = "el día " + m[0]; }
-                    }
-                    if(fBusca) {
-                        const ts = getDB().filter(t => t.fecha === fBusca).sort((a,b) => a.hora.localeCompare(b.hora));
-                        let r = ts.length ? `Para ${tag} tienes:<br>` + ts.map(t => `• <b>${t.hora}:</b> ${t.titulo}`).join('<br>') : `No hay nada para ${tag}, Margarita. ✨`;
-                        box.innerHTML += `<div class="msg aura">${r}</div>`;
-                    } else box.innerHTML += `<div class="msg aura">¿Qué día quieres consultar? Dime 'hoy' o un número de día.</div>`;
+                    box.innerHTML += `<div class="msg aura">Anotado, Margarita. Me encargaré de que todo salga perfecto.</div>`;
                     box.scrollTop = box.scrollHeight;
-                }, 500);
+                }, 600);
             }
         };
-
-        const horaActual = new Date().getHours();
-        const saludoTxt = horaActual >= 20 || horaActual < 6 ? "Buenas noches, Margarita" : (horaActual >= 14 ? "Buenas tardes, Margarita" : "Buenos días, Margarita");
-        document.getElementById('saludo').innerText = saludoTxt;
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
-        actualizarMiniLista();
 
         function updatePorschePosition() {
             const now = new Date();
@@ -366,20 +346,16 @@
             const startOfDay = 6; 
             const endOfDay = 22; 
             const totalActiveHours = endOfDay - startOfDay;
-            let currentProgress;
-            if (hours < startOfDay) currentProgress = 0;
-            else if (hours >= endOfDay) currentProgress = 1;
-            else currentProgress = (hours - startOfDay + minutes / 60) / totalActiveHours;
-            
-            currentProgress = Math.max(0, Math.min(1, currentProgress));
+            let progress = (hours - startOfDay + minutes / 60) / totalActiveHours;
+            progress = Math.max(0, Math.min(1, progress));
             const car = document.getElementById('porsche-car');
-            const carContainerWidth = window.innerWidth;
-            const carWidth = 90;
-            const position = currentProgress * (carContainerWidth + carWidth) - (carWidth/2);
+            const position = progress * window.innerWidth;
             car.style.left = `${position}px`;
         }
+        
         setInterval(updatePorschePosition, 60000);
         updatePorschePosition();
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
     </script>
 </body>
 </html>
