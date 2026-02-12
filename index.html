@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura | Dashboard Premium</title>
+    <title>Aura | Dashboard de Jefa</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,295 +12,202 @@
             --fondo: #0a0a0f;
             --glass: rgba(255, 255, 255, 0.05);
             --border: rgba(255, 255, 255, 0.1);
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #0a0a0f;
         }
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        body {
-            background: var(--fondo);
-            background-image: radial-gradient(circle at top right, #1a1a2e, #0a0a0f);
-            color: white;
-            margin: 0;
-            display: flex;
+        * { box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body { 
+            background: var(--fondo); 
+            background-image: radial-gradient(circle at top right, var(--bg-gradient-start), var(--bg-gradient-end));
+            color: white; 
+            margin: 0; 
+            display: flex; 
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Evitar barras de desplazamiento por el coche */
+            position: relative; /* Para el posicionamiento del coche */
         }
 
-        /* BARRA LATERAL */
-        .sidebar {
-            width: 260px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            padding: 40px 25px;
-            display: flex;
+        /* BARRA LATERAL - ESTILO MEJORADO */
+        .sidebar { 
+            width: 280px; /* Un poco más grande */
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(20px); 
+            border-right: 1px solid var(--border); 
+            padding: 40px 30px; 
+            display: flex; 
             flex-direction: column;
             position: fixed;
             height: 100vh;
             z-index: 100;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 50px;
-        }
+        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 60px; }
+        .logo span { color: var(--púrpura); }
 
-        .logo span {
-            color: var(--púrpura);
+        /* BOTONES DE MENÚ - MÁS GRANDES Y ESTÉTICOS */
+        .menu-btn { 
+            width: 100%; padding: 16px 20px; /* Más padding */
+            margin-bottom: 15px; /* Más espacio entre ellos */
+            background: none; border: none; color: #aaa; /* Color más suave */
+            border-radius: 15px; /* Bordes más redondeados */
+            cursor: pointer; text-align: left; 
+            transition: 0.3s ease-out; font-size: 1.1rem; /* Fuente más grande */
+            display: flex; align-items: center;
+            letter-spacing: 0.5px;
         }
-
-        .menu-btn {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background: none;
-            border: none;
-            color: #888;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: left;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-
-        .menu-btn:hover {
-            background: var(--glass);
-            color: white;
-        }
-
-        .menu-btn.active {
-            background: var(--púrpura);
-            color: white;
-            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
-        }
-
-        /* CONTENIDO */
-        .main {
-            margin-left: 260px;
-            padding: 50px;
-            width: calc(100% - 260px);
-        }
-
-        header {
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            margin: 0;
+        .menu-btn:hover { background: var(--glass); color: white; transform: translateX(5px); }
+        .menu-btn.active { 
+            background: linear-gradient(90deg, var(--púrpura), #8e44ad); 
+            color: white; 
+            box-shadow: 0 6px 20px rgba(112, 0, 255, 0.4); 
+            transform: none;
             font-weight: 600;
         }
-
-        .date-badge {
-            color: var(--cian);
-            font-size: 0.9rem;
-            opacity: 0.8;
-            text-transform: capitalize;
-            margin-bottom: 5px;
+        /* Iconos para los botones (emojis menos agresivos) */
+        .menu-btn span.icon { 
+            margin-right: 15px; 
+            font-size: 1.4em; /* Tamaño del emoji */
+            line-height: 1; /* Para centrar el emoji */
+            opacity: 0.7;
         }
+        .menu-btn.active span.icon { opacity: 1; }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 30px;
-        }
 
-        .widget {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 24px;
+        /* CONTENIDO PRINCIPAL */
+        .main { margin-left: 280px; padding: 60px; width: calc(100% - 280px); }
+        header { margin-bottom: 40px; }
+        h1 { font-size: 2.5rem; margin: 0; font-weight: 600; }
+        .date-badge { color: var(--cian); font-size: 1rem; opacity: 0.8; text-transform: capitalize; margin-bottom: 8px; }
+
+        .grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 35px; } /* Proporción ajustada */
+        .widget { 
+            background: var(--glass); 
+            padding: 35px; 
+            border-radius: 28px; 
             border: 1px solid var(--border);
             backdrop-filter: blur(10px);
         }
 
         /* CHAT AURA */
-        #chat-box {
-            height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .msg {
-            padding: 12px 18px;
-            border-radius: 18px;
-            max-width: 85%;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .aura {
-            background: rgba(112, 0, 255, 0.15);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            border: 1px solid rgba(112, 0, 255, 0.2);
-        }
-
-        .user {
-            background: var(--glass);
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-
-        input#input-chat {
-            width: 100%;
-            padding: 15px 20px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            outline: none;
-            transition: 0.3s;
-            margin-top: 20px;
+        #chat-box { height: 320px; overflow-y: auto; padding-right: 15px; display: flex; flex-direction: column; gap: 18px; }
+        .msg { padding: 14px 20px; border-radius: 20px; max-width: 85%; font-size: 1rem; line-height: 1.6; }
+        .aura { background: rgba(112, 0, 255, 0.18); align-self: flex-start; border-bottom-left-radius: 6px; border: 1px solid rgba(112, 0, 255, 0.25); }
+        .user { background: var(--glass); align-self: flex-end; border-bottom-right-radius: 6px; }
+        
+        input#input-chat { 
+            width: 100%; padding: 16px 22px; border-radius: 18px; border: 1px solid var(--border); 
+            background: rgba(0,0,0,0.25); color: white; outline: none; transition: 0.3s; margin-top: 25px;
+            font-size: 1rem;
         }
 
         /* CALENDARIO */
-        .cal-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 12px;
-            margin-top: 20px;
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 15px; margin-top: 25px; }
+        .day { 
+            aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--glass); border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;
         }
-
-        .day {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: var(--glass);
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .day:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--border);
-        }
-
-        .day.has-task {
-            border-bottom: 3px solid var(--cian);
-        }
+        .day:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); border-color: var(--border); }
+        .day.has-task { border-bottom: 4px solid var(--cian); }
 
         /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #12121a;
-            border: 1px solid var(--border);
-            padding: 35px;
-            z-index: 10000;
-            border-radius: 30px;
-            width: 450px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        .modal { 
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            background: #15151f; border: 1px solid var(--border); padding: 40px; z-index: 10000; 
+            border-radius: 35px; width: 480px; max-width: 90%; box-shadow: 0 30px 60px rgba(0,0,0,0.6); 
+        }
+        .modal.active { display: block; animation: fadeIn 0.3s ease; }
+        .backdrop { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; backdrop-filter: blur(10px); }
+        .backdrop.active { display: block; }
+
+        .btn-add { 
+            background: linear-gradient(45deg, var(--púrpura), #a057ff); color: white; 
+            border: none; padding: 16px; border-radius: 16px; cursor: pointer; width: 100%; 
+            font-weight: 600; margin-top: 20px; font-size: 1.1rem;
         }
 
-        .modal.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
+        input[type="text"], input[type="time"] {
+            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); 
+            background: rgba(0,0,0,0.4); color: white; margin-bottom: 12px; outline: none; font-size: 1rem;
         }
+        label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 6px; margin-left: 5px; }
+        #lista-tareas-dia div { padding: 12px; background: rgba(255,255,255,0.04); margin-bottom: 10px; border-radius: 10px; font-size:0.9rem; border:1px solid rgba(255,255,255,0.08);}
+        #lista-tareas-dia span { color:var(--cian); font-weight:600; font-size:0.95rem;}
 
-        .backdrop {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            backdrop-filter: blur(8px);
-        }
-
-        .backdrop.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -45%);
-            }
-
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        .btn-add {
-            background: linear-gradient(45deg, var(--púrpura), #9d50ff);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 14px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: 600;
-            margin-top: 15px;
-        }
-
-        input[type="text"],
-        input[type="time"] {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            margin-bottom: 10px;
-            outline: none;
-        }
-
-        label {
-            display: block;
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 5px;
-            margin-left: 5px;
-        }
 
         /* MOMENTO FELIZ */
-        .happy-card {
-            text-align: center;
-            padding: 60px 20px;
+        .happy-card { text-align: center; padding: 80px 30px; }
+        .happy-card h2 { font-size: 2.8rem; line-height: 1.4; background: linear-gradient(to right, #fff, var(--cian)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .happy-card p { font-size: 1.3rem; margin-top: 25px;}
+
+
+        /* COCHE Y LÍNEA DE TIEMPO PERSONALIZADA */
+        .car-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px; /* Altura del "horizonte" del coche */
+            z-index: 50; /* Por debajo de la barra lateral */
+            overflow: hidden; /* Para que el coche no se salga */
         }
 
-        .happy-card h2 {
-            font-size: 2.2rem;
-            line-height: 1.3;
-            background: linear-gradient(to right, #fff, var(--cian));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .time-line-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px; /* Grosor de la línea */
+            background: linear-gradient(to right, #000000 0%, #4a00e0 25%, #ff5e00 50%, #e02020 75%, #000000 100%);
+            opacity: 0.7;
+            filter: blur(2px); /* Un pequeño blur para un efecto más suave */
         }
+
+        .porsche-911 {
+            position: absolute;
+            bottom: 5px; /* Altura sobre la línea */
+            left: 0; /* Punto de inicio */
+            width: 150px; /* Tamaño del coche, ajusta si quieres */
+            height: auto;
+            transform: translateX(-50%); /* Para centrar el coche en su posición */
+            transition: left 60s linear; /* Animación suave a lo largo del día (60s es un ejemplo, se actualiza por JS) */
+            filter: drop-shadow(0 0 10px rgba(112, 0, 255, 0.5)); /* Sombra para que destaque */
+            opacity: 0.85; /* Un poco de transparencia para integrarlo */
+        }
+        /* Rotación 3D para el coche */
+        .porsche-911 {
+            position: absolute;
+            bottom: 12px; /* Sube o baja el coche respecto a la línea */
+            left: 0; 
+            width: 90px; /* <--- CAMBIA ESTE VALOR para hacerlo más pequeño o grande */
+            height: auto;
+            transform: translateX(-50%);
+            transition: left 1s linear; 
+            filter: drop-shadow(0 0 5px rgba(112, 0, 255, 0.3));
+            opacity: 0.9;
+            z-index: 60;
+        }
+
+        @keyframes carHover {
+            from { transform: translateY(0px) translateX(-50%); }
+            to { transform: translateY(-5px) translateX(-50%); }
+        }
+
     </style>
 </head>
-
 <body>
 
     <aside class="sidebar">
         <div class="logo">AURA<span>.</span></div>
         <nav>
-            <button class="menu-btn active" onclick="nav('resumen', this)">🏠 Resumen</button>
-            <button class="menu-btn" onclick="nav('agenda', this)">📅 Agenda</button>
-            <button class="menu-btn" onclick="nav('momento', this)">✨ Momento Feliz</button>
+            <button class="menu-btn active" onclick="nav('resumen', this)"><span class="icon">✨</span> Resumen</button>
+            <button class="menu-btn" onclick="nav('agenda', this)"><span class="icon">🗓️</span> Agenda</button>
+            <button class="menu-btn" onclick="nav('momento', this)"><span class="icon">💖</span> Momento Feliz</button>
         </nav>
-        <div style="margin-top: auto; padding: 20px; background: var(--glass); border-radius: 20px;">
+        <div style="margin-top: auto; padding: 25px; background: var(--glass); border-radius: 20px; border: 1px solid var(--border);">
             <div style="font-weight: 600;">Margarita</div>
-            <div style="font-size: 0.8rem; color: #666;">Jefa de Equipo</div>
+            <div style="font-size: 0.85rem; color: #999; margin-top: 5px;">Jefa de Equipo</div>
         </div>
     </aside>
 
@@ -315,14 +221,13 @@
             <div class="widget">
                 <h3 style="margin-top:0">Asistente Aura</h3>
                 <div id="chat-box">
-                    <div class="msg aura">¡Hola Margarita! Soy tu asistente. Pregúntame por tus planes de <b>hoy</b> o
-                        de cualquier <b>día</b>. ✨</div>
+                    <div class="msg aura">¡Hola Margarita! Soy tu asistente. Pregúntame por tus planes de <b>hoy</b> o de cualquier <b>día</b>. ✨</div>
                 </div>
                 <input type="text" id="input-chat" placeholder="Escribe '¿Qué tengo hoy?' o 'el día 18'...">
             </div>
             <div class="widget">
                 <h3 style="margin-top:0">Próximas Tareas</h3>
-                <div id="mini-lista" style="color: #888;"></div>
+                <div id="mini-lista"></div>
             </div>
         </div>
 
@@ -336,18 +241,18 @@
         <div id="sec-momento" style="display:none;">
             <div class="widget happy-card">
                 <h2 id="frase-dinamica">"Cree que puedes y ya estarás a medio camino."</h2>
-                <p style="margin-top:20px; color:#888;">Te quiero mucho, mamá ❤️</p>
+                <p>Te quiero mucho, mamá ❤️</p>
             </div>
         </div>
     </main>
 
     <div class="backdrop" id="backdrop" onclick="cerrar()"></div>
     <div class="modal" id="modal">
-        <h2 id="fecha-titulo" style="margin-top:0; color:var(--cian); font-size: 1.2rem;">Nueva Tarea</h2>
-
+        <h2 id="fecha-titulo" style="margin-top:0; color:var(--cian); font-size: 1.3rem;">Nueva Tarea</h2>
+        
         <label>¿Qué hay que hacer?</label>
         <input type="text" id="tarea-nombre" placeholder="Ej: Revisión médica">
-
+        
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
             <div>
                 <label>Hora Inicio (Opcional)</label>
@@ -360,11 +265,13 @@
         </div>
 
         <button class="btn-add" onclick="guardarTarea()">Añadir a la Agenda</button>
-
-        <div id="lista-tareas-dia"
-            style="margin-top:20px; border-top:1px solid var(--border); padding-top:15px; max-height: 150px; overflow-y: auto;">
-        </div>
+        
+        <div id="lista-tareas-dia" style="margin-top:25px; border-top:1px solid var(--border); padding-top:20px; max-height: 150px; overflow-y: auto;"></div>
     </div>
+
+    <div class="car-container">
+        <div class="time-line-bg" id="time-line-gradient"></div>
+<img src="https://p1.pngwing.com/py/342/907/png-transparent-porsche-911-gt2-car-porsche-911-gt3-r-991-porsche-911-gt3-rsr-porsche-911-997-compact-car-car-performance-car.png" alt="Porsche 911" class="porsche-911" id="porsche-car">    </div>
 
     <script>
         let diaSeleccionado = "";
@@ -389,9 +296,9 @@
             document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            if (s === 'agenda') dibujarCalendario();
-            if (s === 'resumen') actualizarMiniLista();
-            if (s === 'momento') {
+            if(s === 'agenda') dibujarCalendario();
+            if(s === 'resumen') actualizarMiniLista();
+            if(s === 'momento') {
                 const diaSemana = new Date().getDay();
                 document.getElementById('frase-dinamica').innerText = `"${frasesMama[diaSemana]}"`;
             }
@@ -400,12 +307,12 @@
         function dibujarCalendario() {
             const grid = document.getElementById('calendario'); grid.innerHTML = "";
             const db = getDB();
-            for (let i = 1; i <= 28; i++) {
-                const fecha = `2026-02-${i.toString().padStart(2, '0')}`;
+            for(let i=1; i<=28; i++) {
+                const fecha = `2026-02-${i.toString().padStart(2,'0')}`;
                 const tiene = db.some(t => t.fecha === fecha);
                 const d = document.createElement('div');
                 d.className = `day ${tiene ? 'has-task' : ''}`;
-                if (fecha === HOY_ISO) d.style.background = "rgba(112,0,255,0.15)";
+                if(fecha === HOY_ISO) d.style.background = "rgba(112,0,255,0.15)";
                 d.innerHTML = `<b>${i}</b>`;
                 d.onclick = () => abrirModal(fecha, i);
                 grid.appendChild(d);
@@ -429,16 +336,16 @@
             const titulo = document.getElementById('tarea-nombre').value;
             const inicio = document.getElementById('tarea-inicio').value;
             const fin = document.getElementById('tarea-fin').value;
-            if (!titulo) return;
+            if(!titulo) return;
 
             let horario = "Todo el día";
-            if (inicio && fin) horario = `${inicio} a ${fin}`;
-            else if (inicio) horario = `A las ${inicio}`;
+            if(inicio && fin) horario = `${inicio} - ${fin}`; // Formato HH:MM - HH:MM
+            else if(inicio) horario = `A las ${inicio}`;
 
             const db = getDB();
             db.push({ fecha: diaSeleccionado, titulo: titulo, hora: horario });
             localStorage.setItem('tareas_aura', JSON.stringify(db));
-
+            
             document.getElementById('tarea-nombre').value = "";
             document.getElementById('tarea-inicio').value = "";
             document.getElementById('tarea-fin').value = "";
@@ -448,32 +355,32 @@
 
         function actualizarListaModal() {
             const div = document.getElementById('lista-tareas-dia');
-            const tareas = getDB().filter(t => t.fecha === diaSeleccionado);
+            const tareas = getDB().filter(t => t.fecha === diaSeleccionado).sort((a,b) => a.hora.localeCompare(b.hora)); // Ordenar por hora
             div.innerHTML = tareas.length ? tareas.map(t => `<div style="padding:10px; background:rgba(255,255,255,0.03); margin-bottom:8px; border-radius:10px; font-size:0.85rem;"><span style="color:var(--cian); font-weight:600;">${t.hora}</span><br>${t.titulo}</div>`).join('') : "<span style='color:#555'>No hay tareas.</span>";
         }
 
         function actualizarMiniLista() {
             const div = document.getElementById('mini-lista');
-            const tareas = getDB().filter(t => t.fecha === HOY_ISO);
-            div.innerHTML = tareas.length ? tareas.map(t => `<div style="margin-bottom:12px"><b style="color:var(--púrpura)">${t.hora}</b><br><span style="color:white; font-size:0.9rem;">${t.titulo}</span></div>`).join('') : "Hoy estás libre Margarita. ✨";
+            const tareas = getDB().filter(t => t.fecha === HOY_ISO).sort((a,b) => a.hora.localeCompare(b.hora)); // Ordenar por hora
+            div.innerHTML = tareas.length ? tareas.map(t => `<div style="margin-bottom:15px"><b style="color:var(--púrpura); font-size:1rem;">${t.hora}</b><br><span style="color:white; font-size:0.95rem;">${t.titulo}</span></div>`).join('') : "<span style='color:#888;'>Hoy estás libre, ¡disfruta! ✨</span>";
         }
 
-        document.getElementById('input-chat').onkeypress = function (e) {
-            if (e.key === 'Enter') {
+        document.getElementById('input-chat').onkeypress = function(e) {
+            if(e.key === 'Enter') {
                 const txt = this.value;
                 const box = document.getElementById('chat-box');
                 box.innerHTML += `<div class="msg user">${txt}</div>`;
                 this.value = "";
                 setTimeout(() => {
                     let fBusca = ""; let tag = "";
-                    if (txt.toLowerCase().includes("hoy")) { fBusca = HOY_ISO; tag = "hoy"; }
-                    else {
-                        const m = txt.match(/\d+/);
-                        if (m) { fBusca = `2026-02-${m[0].padStart(2, '0')}`; tag = "el día " + m[0]; }
+                    if(txt.toLowerCase().includes("hoy")) { fBusca = HOY_ISO; tag = "hoy"; }
+                    else { 
+                        const m = txt.match(/\d+/); 
+                        if(m) { fBusca = `2026-02-${m[0].padStart(2,'0')}`; tag = "el día " + m[0]; }
                     }
-
-                    if (fBusca) {
-                        const ts = getDB().filter(t => t.fecha === fBusca);
+                    
+                    if(fBusca) {
+                        const ts = getDB().filter(t => t.fecha === fBusca).sort((a,b) => a.hora.localeCompare(b.hora));
                         let r = ts.length ? `Para ${tag} tienes:<br>` + ts.map(t => `• <b>${t.hora}:</b> ${t.titulo}`).join('<br>') : `No hay nada para ${tag}, Margarita. ✨`;
                         box.innerHTML += `<div class="msg aura">${r}</div>`;
                     } else box.innerHTML += `<div class="msg aura">¿Qué día quieres consultar? Dime 'hoy' o un número de día.</div>`;
@@ -482,12 +389,56 @@
             }
         };
 
-        const hora = new Date().getHours();
-        const saludoTxt = hora >= 20 || hora < 6 ? "Buenas noches, Margarita" : (hora >= 14 ? "Buenas tardes, Margarita" : "Buenos días, Margarita");
+        // Saludo dinámico (Buenos días, tardes, noches)
+        const horaActual = new Date().getHours();
+        const saludoTxt = horaActual >= 20 || horaActual < 6 ? "Buenas noches, Margarita" : (horaActual >= 14 ? "Buenas tardes, Margarita" : "Buenos días, Margarita");
         document.getElementById('saludo').innerText = saludoTxt;
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
         actualizarMiniLista();
+
+        // --- LÓGICA DEL PORSCHE 911 Y LÍNEA DE TIEMPO ---
+        function updatePorschePosition() {
+            const now = new Date();
+            const hours = now.getHours(); // 0-23
+            const minutes = now.getMinutes(); // 0-59
+            
+            // Calcular el progreso del día (0 a 1)
+            // Asumimos un día "activo" de 6:00 a 22:00 (16 horas)
+            const startOfDay = 6; 
+            const endOfDay = 22; 
+            const totalActiveHours = endOfDay - startOfDay;
+
+            let currentProgress;
+            if (hours < startOfDay) { // Antes del amanecer
+                currentProgress = 0;
+            } else if (hours >= endOfDay) { // Después del anochecer
+                currentProgress = 1;
+            } else { // Durante el día activo
+                currentProgress = (hours - startOfDay + minutes / 60) / totalActiveHours;
+            }
+
+            // Asegurar que el progreso esté entre 0 y 1
+            currentProgress = Math.max(0, Math.min(1, currentProgress));
+
+            const car = document.getElementById('porsche-car');
+            const carContainerWidth = document.querySelector('.car-container').offsetWidth;
+            const carWidth = car.offsetWidth;
+
+            // La posición del coche va de -carWidth/2 (para que el coche aparezca desde la izquierda)
+            // hasta carContainerWidth - carWidth/2 (para que el coche desaparezca por la derecha)
+            const position = currentProgress * (carContainerWidth - carWidth/2) - carWidth/2;
+
+            car.style.left = `${position}px`;
+
+            // Actualizar el degradado de la línea de tiempo (CSS)
+            // Esto se hace con un truco, el CSS ya define el gradiente con colores fríos-cálidos-fríos
+            // El coche simplemente se mueve por encima de él.
+        }
+
+        // Actualizar la posición cada minuto
+        setInterval(updatePorschePosition, 60000); // Cada minuto
+        updatePorschePosition(); // Llamar una vez al cargar para que se posicione
+
     </script>
 </body>
-
 </html>
