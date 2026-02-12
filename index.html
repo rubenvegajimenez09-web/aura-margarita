@@ -25,13 +25,12 @@
             margin: 0; 
             display: flex; 
             min-height: 100vh;
-            overflow-x: hidden; /* Evitar barras de desplazamiento por el coche */
-            position: relative; /* Para el posicionamiento del coche */
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* BARRA LATERAL - ESTILO MEJORADO */
         .sidebar { 
-            width: 280px; /* Un poco más grande */
+            width: 280px; 
             background: rgba(0, 0, 0, 0.4); 
             backdrop-filter: blur(20px); 
             border-right: 1px solid var(--border); 
@@ -46,14 +45,13 @@
         .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 60px; }
         .logo span { color: var(--púrpura); }
 
-        /* BOTONES DE MENÚ - MÁS GRANDES Y ESTÉTICOS */
         .menu-btn { 
-            width: 100%; padding: 16px 20px; /* Más padding */
-            margin-bottom: 15px; /* Más espacio entre ellos */
-            background: none; border: none; color: #aaa; /* Color más suave */
-            border-radius: 15px; /* Bordes más redondeados */
+            width: 100%; padding: 16px 20px; 
+            margin-bottom: 15px; 
+            background: none; border: none; color: #aaa; 
+            border-radius: 15px; 
             cursor: pointer; text-align: left; 
-            transition: 0.3s ease-out; font-size: 1.1rem; /* Fuente más grande */
+            transition: 0.3s ease-out; font-size: 1.1rem; 
             display: flex; align-items: center;
             letter-spacing: 0.5px;
         }
@@ -65,23 +63,15 @@
             transform: none;
             font-weight: 600;
         }
-        /* Iconos para los botones (emojis menos agresivos) */
-        .menu-btn span.icon { 
-            margin-right: 15px; 
-            font-size: 1.4em; /* Tamaño del emoji */
-            line-height: 1; /* Para centrar el emoji */
-            opacity: 0.7;
-        }
+        .menu-btn span.icon { margin-right: 15px; font-size: 1.4em; opacity: 0.7; }
         .menu-btn.active span.icon { opacity: 1; }
 
-
-        /* CONTENIDO PRINCIPAL */
         .main { margin-left: 280px; padding: 60px; width: calc(100% - 280px); }
         header { margin-bottom: 40px; }
         h1 { font-size: 2.5rem; margin: 0; font-weight: 600; }
         .date-badge { color: var(--cian); font-size: 1rem; opacity: 0.8; text-transform: capitalize; margin-bottom: 8px; }
 
-        .grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 35px; } /* Proporción ajustada */
+        .grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 35px; }
         .widget { 
             background: var(--glass); 
             padding: 35px; 
@@ -90,7 +80,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* CHAT AURA */
         #chat-box { height: 320px; overflow-y: auto; padding-right: 15px; display: flex; flex-direction: column; gap: 18px; }
         .msg { padding: 14px 20px; border-radius: 20px; max-width: 85%; font-size: 1rem; line-height: 1.6; }
         .aura { background: rgba(112, 0, 255, 0.18); align-self: flex-start; border-bottom-left-radius: 6px; border: 1px solid rgba(112, 0, 255, 0.25); }
@@ -102,7 +91,6 @@
             font-size: 1rem;
         }
 
-        /* CALENDARIO */
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 15px; margin-top: 25px; }
         .day { 
             aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -111,7 +99,6 @@
         .day:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); border-color: var(--border); }
         .day.has-task { border-bottom: 4px solid var(--cian); }
 
-        /* MODAL */
         .modal { 
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             background: #15151f; border: 1px solid var(--border); padding: 40px; z-index: 10000; 
@@ -132,25 +119,21 @@
             background: rgba(0,0,0,0.4); color: white; margin-bottom: 12px; outline: none; font-size: 1rem;
         }
         label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 6px; margin-left: 5px; }
-        #lista-tareas-dia div { padding: 12px; background: rgba(255,255,255,0.04); margin-bottom: 10px; border-radius: 10px; font-size:0.9rem; border:1px solid rgba(255,255,255,0.08);}
-        #lista-tareas-dia span { color:var(--cian); font-weight:600; font-size:0.95rem;}
 
-
-        /* MOMENTO FELIZ */
         .happy-card { text-align: center; padding: 80px 30px; }
         .happy-card h2 { font-size: 2.8rem; line-height: 1.4; background: linear-gradient(to right, #fff, var(--cian)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .happy-card p { font-size: 1.3rem; margin-top: 25px;}
 
-
-        /* COCHE Y LÍNEA DE TIEMPO PERSONALIZADA */
+        /* COCHE Y LÍNEA - UNIFICADO */
         .car-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 120px; /* Altura del "horizonte" del coche */
-            z-index: 50; /* Por debajo de la barra lateral */
-            overflow: hidden; /* Para que el coche no se salga */
+            height: 120px;
+            z-index: 40;
+            overflow: hidden;
+            pointer-events: none; /* Permite hacer clic a través del contenedor si fuera necesario */
         }
 
         .time-line-bg {
@@ -158,41 +141,31 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 10px; /* Grosor de la línea */
+            height: 8px;
             background: linear-gradient(to right, #000000 0%, #4a00e0 25%, #ff5e00 50%, #e02020 75%, #000000 100%);
-            opacity: 0.7;
-            filter: blur(2px); /* Un pequeño blur para un efecto más suave */
+            opacity: 0.6;
+            filter: blur(1px);
         }
 
         .porsche-911 {
             position: absolute;
-            bottom: 5px; /* Altura sobre la línea */
-            left: 0; /* Punto de inicio */
-            width: 150px; /* Tamaño del coche, ajusta si quieres */
-            height: auto;
-            transform: translateX(-50%); /* Para centrar el coche en su posición */
-            transition: left 60s linear; /* Animación suave a lo largo del día (60s es un ejemplo, se actualiza por JS) */
-            filter: drop-shadow(0 0 10px rgba(112, 0, 255, 0.5)); /* Sombra para que destaque */
-            opacity: 0.85; /* Un poco de transparencia para integrarlo */
-        }
-        /* Rotación 3D para el coche */
-        .porsche-911 {
-            position: absolute;
-            bottom: 12px; /* Sube o baja el coche respecto a la línea */
+            bottom: 10px; /* Ajustado para que toque la línea */
             left: 0; 
-            width: 90px; /* <--- CAMBIA ESTE VALOR para hacerlo más pequeño o grande */
+            width: 90px;
             height: auto;
             transform: translateX(-50%);
             transition: left 1s linear; 
-            filter: drop-shadow(0 0 5px rgba(112, 0, 255, 0.3));
+            filter: drop-shadow(0 0 8px rgba(112, 0, 255, 0.4));
             opacity: 0.9;
-            z-index: 60;
+            animation: carHover 2s infinite alternate ease-in-out;
         }
 
         @keyframes carHover {
             from { transform: translateY(0px) translateX(-50%); }
-            to { transform: translateY(-5px) translateX(-50%); }
+            to { transform: translateY(-4px) translateX(-50%); }
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }
 
     </style>
 </head>
@@ -249,10 +222,8 @@
     <div class="backdrop" id="backdrop" onclick="cerrar()"></div>
     <div class="modal" id="modal">
         <h2 id="fecha-titulo" style="margin-top:0; color:var(--cian); font-size: 1.3rem;">Nueva Tarea</h2>
-        
         <label>¿Qué hay que hacer?</label>
         <input type="text" id="tarea-nombre" placeholder="Ej: Revisión médica">
-        
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
             <div>
                 <label>Hora Inicio (Opcional)</label>
@@ -263,28 +234,26 @@
                 <input type="time" id="tarea-fin">
             </div>
         </div>
-
         <button class="btn-add" onclick="guardarTarea()">Añadir a la Agenda</button>
-        
         <div id="lista-tareas-dia" style="margin-top:25px; border-top:1px solid var(--border); padding-top:20px; max-height: 150px; overflow-y: auto;"></div>
     </div>
 
     <div class="car-container">
-        <div class="time-line-bg" id="time-line-gradient"></div>
-<img src="https://p1.pngwing.com/py/342/907/png-transparent-porsche-911-gt2-car-porsche-911-gt3-r-991-porsche-911-gt3-rsr-porsche-911-997-compact-car-car-performance-car.png" alt="Porsche 911" class="porsche-911" id="porsche-car">    </div>
+        <div class="time-line-bg"></div>
+        <img src="https://p1.pngwing.com/py/342/907/png-transparent-porsche-911-gt2-car-porsche-911-gt3-r-991-porsche-911-gt3-rsr-porsche-911-997-compact-car-car-performance-car.png" alt="Porsche 911" class="porsche-911" id="porsche-car">
+    </div>
 
     <script>
         let diaSeleccionado = "";
         const HOY_ISO = new Date().toISOString().split('T')[0];
-
         const frasesMama = [
-            "Eres la mejor madre y una profesional imparable. ❤️", // Domingo
-            "Cree que puedes y ya estarás a medio camino. ❤️", // Lunes
-            "Tu sonrisa es la mejor red social, ¡compártela hoy! ✨", // Martes
-            "Eres capaz de cosas increíbles, solo tienes que ser tú misma. 🌸", // Miércoles
-            "Hoy es un buen día para tener un gran día, Jefa. 🚀", // Jueves
-            "No cuentes los días, haz que los días cuenten. 💎", // Viernes
-            "Tu energía es contagiosa, ¡ilumina a tu equipo hoy! ☀️" // Sábado
+            "Eres la mejor madre y una profesional imparable. ❤️",
+            "Cree que puedes y ya estarás a medio camino. ❤️",
+            "Tu sonrisa es la mejor red social, ¡compártela hoy! ✨",
+            "Eres capaz de cosas increíbles, solo tienes que ser tú misma. 🌸",
+            "Hoy es un buen día para tener un gran día, Jefa. 🚀",
+            "No cuentes los días, haz que los días cuenten. 💎",
+            "Tu energía es contagiosa, ¡ilumina a tu equipo hoy! ☀️"
         ];
 
         function getDB() { return JSON.parse(localStorage.getItem('tareas_aura')) || []; }
@@ -295,7 +264,6 @@
             document.getElementById('sec-momento').style.display = s === 'momento' ? 'block' : 'none';
             document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
             if(s === 'agenda') dibujarCalendario();
             if(s === 'resumen') actualizarMiniLista();
             if(s === 'momento') {
@@ -337,15 +305,12 @@
             const inicio = document.getElementById('tarea-inicio').value;
             const fin = document.getElementById('tarea-fin').value;
             if(!titulo) return;
-
             let horario = "Todo el día";
-            if(inicio && fin) horario = `${inicio} - ${fin}`; // Formato HH:MM - HH:MM
+            if(inicio && fin) horario = `${inicio} - ${fin}`;
             else if(inicio) horario = `A las ${inicio}`;
-
             const db = getDB();
             db.push({ fecha: diaSeleccionado, titulo: titulo, hora: horario });
             localStorage.setItem('tareas_aura', JSON.stringify(db));
-            
             document.getElementById('tarea-nombre').value = "";
             document.getElementById('tarea-inicio').value = "";
             document.getElementById('tarea-fin').value = "";
@@ -355,13 +320,13 @@
 
         function actualizarListaModal() {
             const div = document.getElementById('lista-tareas-dia');
-            const tareas = getDB().filter(t => t.fecha === diaSeleccionado).sort((a,b) => a.hora.localeCompare(b.hora)); // Ordenar por hora
-            div.innerHTML = tareas.length ? tareas.map(t => `<div style="padding:10px; background:rgba(255,255,255,0.03); margin-bottom:8px; border-radius:10px; font-size:0.85rem;"><span style="color:var(--cian); font-weight:600;">${t.hora}</span><br>${t.titulo}</div>`).join('') : "<span style='color:#555'>No hay tareas.</span>";
+            const tareas = getDB().filter(t => t.fecha === diaSeleccionado).sort((a,b) => a.hora.localeCompare(b.hora));
+            div.innerHTML = tareas.length ? tareas.map(t => `<div><span>${t.hora}</span><br>${t.titulo}</div>`).join('') : "<span style='color:#555'>No hay tareas.</span>";
         }
 
         function actualizarMiniLista() {
             const div = document.getElementById('mini-lista');
-            const tareas = getDB().filter(t => t.fecha === HOY_ISO).sort((a,b) => a.hora.localeCompare(b.hora)); // Ordenar por hora
+            const tareas = getDB().filter(t => t.fecha === HOY_ISO).sort((a,b) => a.hora.localeCompare(b.hora));
             div.innerHTML = tareas.length ? tareas.map(t => `<div style="margin-bottom:15px"><b style="color:var(--púrpura); font-size:1rem;">${t.hora}</b><br><span style="color:white; font-size:0.95rem;">${t.titulo}</span></div>`).join('') : "<span style='color:#888;'>Hoy estás libre, ¡disfruta! ✨</span>";
         }
 
@@ -378,7 +343,6 @@
                         const m = txt.match(/\d+/); 
                         if(m) { fBusca = `2026-02-${m[0].padStart(2,'0')}`; tag = "el día " + m[0]; }
                     }
-                    
                     if(fBusca) {
                         const ts = getDB().filter(t => t.fecha === fBusca).sort((a,b) => a.hora.localeCompare(b.hora));
                         let r = ts.length ? `Para ${tag} tienes:<br>` + ts.map(t => `• <b>${t.hora}:</b> ${t.titulo}`).join('<br>') : `No hay nada para ${tag}, Margarita. ✨`;
@@ -389,56 +353,33 @@
             }
         };
 
-        // Saludo dinámico (Buenos días, tardes, noches)
         const horaActual = new Date().getHours();
         const saludoTxt = horaActual >= 20 || horaActual < 6 ? "Buenas noches, Margarita" : (horaActual >= 14 ? "Buenas tardes, Margarita" : "Buenos días, Margarita");
         document.getElementById('saludo').innerText = saludoTxt;
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
         actualizarMiniLista();
 
-        // --- LÓGICA DEL PORSCHE 911 Y LÍNEA DE TIEMPO ---
         function updatePorschePosition() {
             const now = new Date();
-            const hours = now.getHours(); // 0-23
-            const minutes = now.getMinutes(); // 0-59
-            
-            // Calcular el progreso del día (0 a 1)
-            // Asumimos un día "activo" de 6:00 a 22:00 (16 horas)
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
             const startOfDay = 6; 
             const endOfDay = 22; 
             const totalActiveHours = endOfDay - startOfDay;
-
             let currentProgress;
-            if (hours < startOfDay) { // Antes del amanecer
-                currentProgress = 0;
-            } else if (hours >= endOfDay) { // Después del anochecer
-                currentProgress = 1;
-            } else { // Durante el día activo
-                currentProgress = (hours - startOfDay + minutes / 60) / totalActiveHours;
-            }
-
-            // Asegurar que el progreso esté entre 0 y 1
+            if (hours < startOfDay) currentProgress = 0;
+            else if (hours >= endOfDay) currentProgress = 1;
+            else currentProgress = (hours - startOfDay + minutes / 60) / totalActiveHours;
+            
             currentProgress = Math.max(0, Math.min(1, currentProgress));
-
             const car = document.getElementById('porsche-car');
-            const carContainerWidth = document.querySelector('.car-container').offsetWidth;
-            const carWidth = car.offsetWidth;
-
-            // La posición del coche va de -carWidth/2 (para que el coche aparezca desde la izquierda)
-            // hasta carContainerWidth - carWidth/2 (para que el coche desaparezca por la derecha)
-            const position = currentProgress * (carContainerWidth - carWidth/2) - carWidth/2;
-
+            const carContainerWidth = window.innerWidth;
+            const carWidth = 90;
+            const position = currentProgress * (carContainerWidth + carWidth) - (carWidth/2);
             car.style.left = `${position}px`;
-
-            // Actualizar el degradado de la línea de tiempo (CSS)
-            // Esto se hace con un truco, el CSS ya define el gradiente con colores fríos-cálidos-fríos
-            // El coche simplemente se mueve por encima de él.
         }
-
-        // Actualizar la posición cada minuto
-        setInterval(updatePorschePosition, 60000); // Cada minuto
-        updatePorschePosition(); // Llamar una vez al cargar para que se posicione
-
+        setInterval(updatePorschePosition, 60000);
+        updatePorschePosition();
     </script>
 </body>
 </html>
