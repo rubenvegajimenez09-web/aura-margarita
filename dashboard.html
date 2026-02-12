@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura | Dashboard Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --púrpura: #7000ff;
+            --cian: #00d2ff;
+            --fondo: #0a0a0f;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--fondo);
+            background-image: radial-gradient(circle at top right, #1a1a2e, #0a0a0f);
+            color: white;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* BARRA LATERAL */
+        .sidebar {
+            width: 260px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+        }
+
+        .logo span {
+            color: var(--púrpura);
+        }
+
+        .menu-btn {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: none;
+            border: none;
+            color: #888;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .menu-btn:hover {
+            background: var(--glass);
+            color: white;
+        }
+
+        .menu-btn.active {
+            background: var(--púrpura);
+            color: white;
+            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
+        }
+
+        /* CONTENIDO */
+        .main {
+            margin-left: 260px;
+            padding: 50px;
+            width: calc(100% - 260px);
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .date-badge {
+            color: var(--cian);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: capitalize;
+            margin-bottom: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+
+        .widget {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        /* CHAT AURA */
+        #chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg {
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .aura {
+            background: rgba(112, 0, 255, 0.15);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(112, 0, 255, 0.2);
+        }
+
+        .user {
+            background: var(--glass);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        input#input-chat {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            outline: none;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        /* CALENDARIO */
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .day:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--border);
+        }
+
+        .day.has-task {
+            border-bottom: 3px solid var(--cian);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #12121a;
+            border: 1px solid var(--border);
+            padding: 35px;
+            z-index: 10000;
+            border-radius: 30px;
+            width: 450px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            backdrop-filter: blur(8px);
+        }
+
+        .backdrop.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .btn-add {
+            background: linear-gradient(45deg, var(--púrpura), #9d50ff);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        input[type="text"],
+        input[type="time"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 5px;
+            margin-left: 5px;
+        }
+
+        /* MOMENTO FELIZ */
+        .happy-card {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .happy-card h2 {
+            font-size: 2.2rem;
+            line-height: 1.3;
+            background: linear-gradient(to right, #fff, var(--cian));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">AURA<span>.</span></div>
+        <nav>
+            <button class="menu-btn active" onclick="nav('resumen', this)">🏠 Resumen</button>
+            <button class="menu-btn" onclick="nav('agenda', this)">📅 Agenda</button>
+            <button class="menu-btn" onclick="nav('momento', this)">✨ Momento Feliz</button>
+        </nav>
+        <div style="margin-top: auto; padding: 20px; background: var(--glass); border-radius: 20px;">
+            <div style="font-weight: 600;">Margarita</div>
+            <div style="font-size: 0.8rem; color: #666;">Jefa de Equipo</div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header>
+            <div class="date-badge" id="current-date"></div>
+            <h1 id="saludo">Hola, Margarita</h1>
+        </header>
+
+        <div id="sec-resumen" class="grid">
+            <div class="widget">
+                <h3 style="margin-top:0">Asistente Aura</h3>
+                <div id="chat-box">
+                    <div class="msg aura">¡Hola Margarita! Soy tu asistente. Pregúntame por tus planes de <b>hoy</b> o
+                        de cualquier <b>día</b>. ✨</div>
+                </div>
+                <input type="text" id="input-chat" placeholder="Escribe '¿Qué tengo hoy?' o 'el día 18'...">
+            </div>
+            <div class="widget">
+                <h3 style="margin-top:0">Próximas Tareas</h3>
+                <div id="mini-lista" style="color: #888;"></div>
+            </div>
+        </div>
+
+        <div id="sec-agenda" style="display:none;">
+            <div class="widget">
+                <h2 style="margin-top:0">Febrero 2026</h2>
+                <div class="cal-grid" id="calendario"></div>
+            </div>
+        </div>
+
+        <div id="sec-momento" style="display:none;">
+            <div class="widget happy-card">
+                <h2 id="frase-dinamica">"Cree que puedes y ya estarás a medio camino."</h2>
+                <p style="margin-top:20px; color:#888;">Te quiero mucho, mamá ❤️</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="backdrop" id="backdrop" onclick="cerrar()"></div>
+    <div class="modal" id="modal">
+        <h2 id="fecha-titulo" style="margin-top:0; color:var(--cian); font-size: 1.2rem;">Nueva Tarea</h2>
+
+        <label>¿Qué hay que hacer?</label>
+        <input type="text" id="tarea-nombre" placeholder="Ej: Revisión médica">
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+            <div>
+                <label>Hora Inicio (Opcional)</label>
+                <input type="time" id="tarea-inicio">
+            </div>
+            <div>
+                <label>Hora Fin (Opcional)</label>
+                <input type="time" id="tarea-fin">
+            </div>
+        </div>
+
+        <button class="btn-add" onclick="guardarTarea()">Añadir a la Agenda</button>
+
+        <div id="lista-tareas-dia"
+            style="margin-top:20px; border-top:1px solid var(--border); padding-top:15px; max-height: 150px; overflow-y: auto;">
+        </div>
+    </div>
+
+    <script>
+        let diaSeleccionado = "";
+        const HOY_ISO = new Date().toISOString().split('T')[0];
+
+        const frasesMama = [
+            "Eres la mejor madre y una profesional imparable. ❤️", // Domingo
+            "Cree que puedes y ya estarás a medio camino. ❤️", // Lunes
+            "Tu sonrisa es la mejor red social, ¡compártela hoy! ✨", // Martes
+            "Eres capaz de cosas increíbles, solo tienes que ser tú misma. 🌸", // Miércoles
+            "Hoy es un buen día para tener un gran día, Jefa. 🚀", // Jueves
+            "No cuentes los días, haz que los días cuenten. 💎", // Viernes
+            "Tu energía es contagiosa, ¡ilumina a tu equipo hoy! ☀️" // Sábado
+        ];
+
+        function getDB() { return JSON.parse(localStorage.getItem('tareas_aura')) || []; }
+
+        function nav(s, btn) {
+            document.getElementById('sec-resumen').style.display = s === 'resumen' ? 'grid' : 'none';
+            document.getElementById('sec-agenda').style.display = s === 'agenda' ? 'block' : 'none';
+            document.getElementById('sec-momento').style.display = s === 'momento' ? 'block' : 'none';
+            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (s === 'agenda') dibujarCalendario();
+            if (s === 'resumen') actualizarMiniLista();
+            if (s === 'momento') {
+                const diaSemana = new Date().getDay();
+                document.getElementById('frase-dinamica').innerText = `"${frasesMama[diaSemana]}"`;
+            }
+        }
+
+        function dibujarCalendario() {
+            const grid = document.getElementById('calendario'); grid.innerHTML = "";
+            const db = getDB();
+            for (let i = 1; i <= 28; i++) {
+                const fecha = `2026-02-${i.toString().padStart(2, '0')}`;
+                const tiene = db.some(t => t.fecha === fecha);
+                const d = document.createElement('div');
+                d.className = `day ${tiene ? 'has-task' : ''}`;
+                if (fecha === HOY_ISO) d.style.background = "rgba(112,0,255,0.15)";
+                d.innerHTML = `<b>${i}</b>`;
+                d.onclick = () => abrirModal(fecha, i);
+                grid.appendChild(d);
+            }
+        }
+
+        function abrirModal(fecha, num) {
+            diaSeleccionado = fecha;
+            document.getElementById('modal').classList.add('active');
+            document.getElementById('backdrop').classList.add('active');
+            document.getElementById('fecha-titulo').innerText = "Planes para el " + num + " de Febrero";
+            actualizarListaModal();
+        }
+
+        function cerrar() {
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('backdrop').classList.remove('active');
+        }
+
+        function guardarTarea() {
+            const titulo = document.getElementById('tarea-nombre').value;
+            const inicio = document.getElementById('tarea-inicio').value;
+            const fin = document.getElementById('tarea-fin').value;
+            if (!titulo) return;
+
+            let horario = "Todo el día";
+            if (inicio && fin) horario = `${inicio} a ${fin}`;
+            else if (inicio) horario = `A las ${inicio}`;
+
+            const db = getDB();
+            db.push({ fecha: diaSeleccionado, titulo: titulo, hora: horario });
+            localStorage.setItem('tareas_aura', JSON.stringify(db));
+
+            document.getElementById('tarea-nombre').value = "";
+            document.getElementById('tarea-inicio').value = "";
+            document.getElementById('tarea-fin').value = "";
+            actualizarListaModal();
+            actualizarMiniLista();
+        }
+
+        function actualizarListaModal() {
+            const div = document.getElementById('lista-tareas-dia');
+            const tareas = getDB().filter(t => t.fecha === diaSeleccionado);
+            div.innerHTML = tareas.length ? tareas.map(t => `<div style="padding:10px; background:rgba(255,255,255,0.03); margin-bottom:8px; border-radius:10px; font-size:0.85rem;"><span style="color:var(--cian); font-weight:600;">${t.hora}</span><br>${t.titulo}</div>`).join('') : "<span style='color:#555'>No hay tareas.</span>";
+        }
+
+        function actualizarMiniLista() {
+            const div = document.getElementById('mini-lista');
+            const tareas = getDB().filter(t => t.fecha === HOY_ISO);
+            div.innerHTML = tareas.length ? tareas.map(t => `<div style="margin-bottom:12px"><b style="color:var(--púrpura)">${t.hora}</b><br><span style="color:white; font-size:0.9rem;">${t.titulo}</span></div>`).join('') : "Hoy estás libre Margarita. ✨";
+        }
+
+        document.getElementById('input-chat').onkeypress = function (e) {
+            if (e.key === 'Enter') {
+                const txt = this.value;
+                const box = document.getElementById('chat-box');
+                box.innerHTML += `<div class="msg user">${txt}</div>`;
+                this.value = "";
+                setTimeout(() => {
+                    let fBusca = ""; let tag = "";
+                    if (txt.toLowerCase().includes("hoy")) { fBusca = HOY_ISO; tag = "hoy"; }
+                    else {
+                        const m = txt.match(/\d+/);
+                        if (m) { fBusca = `2026-02-${m[0].padStart(2, '0')}`; tag = "el día " + m[0]; }
+                    }
+
+                    if (fBusca) {
+                        const ts = getDB().filter(t => t.fecha === fBusca);
+                        let r = ts.length ? `Para ${tag} tienes:<br>` + ts.map(t => `• <b>${t.hora}:</b> ${t.titulo}`).join('<br>') : `No hay nada para ${tag}, Margarita. ✨`;
+                        box.innerHTML += `<div class="msg aura">${r}</div>`;
+                    } else box.innerHTML += `<div class="msg aura">¿Qué día quieres consultar? Dime 'hoy' o un número de día.</div>`;
+                    box.scrollTop = box.scrollHeight;
+                }, 500);
+            }
+        };
+
+        const hora = new Date().getHours();
+        const saludoTxt = hora >= 20 || hora < 6 ? "Buenas noches, Margarita" : (hora >= 14 ? "Buenas tardes, Margarita" : "Buenos días, Margarita");
+        document.getElementById('saludo').innerText = saludoTxt;
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        actualizarMiniLista();
+    </script>
+</body>
+
+</html>
